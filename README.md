@@ -34,7 +34,9 @@ entirely for non-admin users, not just disabled.
 ## Setup & running locally
 
 ### Prerequisites
-- Node.js 18+ and npm
+- Node.js **22.5+** (uses the built-in `node:sqlite` module — no native
+  compiler/build toolchain required on any OS, unlike drivers such as
+  `better-sqlite3` or `sqlite3` that need node-gyp)
 
 ### 1. Backend
 
@@ -169,10 +171,16 @@ the ability to run servers/tests — not copy-paste-from-a-chat-window usage.
   rather than asserted after the fact.
 - **Debugging real tooling issues.** The assistant hit and fixed several
   environment problems live: `ts-jest` incompatibility with a just-released
-  TypeScript major version (pinned to 5.6.3), a missing `@types/better-
-  sqlite3` package, an npm peer-dependency conflict on `cross-env`, a
-  Tailwind v4 `@import` ordering warning, and a `tsconfig` `rootDir` bug
-  that put the compiled server at the wrong path for `npm start`.
+  TypeScript major version (pinned to 5.6.3), an npm peer-dependency
+  conflict on `cross-env`, a Tailwind v4 `@import` ordering warning, and a
+  `tsconfig` `rootDir` bug that put the compiled server at the wrong path
+  for `npm start`. After initial delivery, a user hit `node-gyp`/Visual
+  Studio Build Tools failures installing `better-sqlite3` on Windows; the
+  assistant migrated the whole data layer to Node's built-in `node:sqlite`
+  module instead (same `.prepare().run()/.get()/.all()` API surface, so the
+  change was mostly type-import updates), removing the native-compilation
+  dependency entirely and re-verified all 36 tests plus a live server smoke
+  test afterward.
 - **Design decisions, not just code.** For the frontend, the assistant
   produced a short design brief (palette, type pairing, a signature visual
   element — see the Design section above) before writing any component

@@ -1,6 +1,6 @@
 import express, { Express } from 'express';
 import cors from 'cors';
-import type Database from 'better-sqlite3';
+import type { DatabaseSync } from 'node:sqlite';
 import { createAuthRouter } from './routes/auth.routes';
 import { createVehiclesRouter } from './routes/vehicles.routes';
 
@@ -9,7 +9,7 @@ import { createVehiclesRouter } from './routes/vehicles.routes';
  * (rather than a module-level singleton) so tests can inject a fresh
  * in-memory database per test file/suite.
  */
-export function createApp(db: Database.Database): Express {
+export function createApp(db: DatabaseSync): Express {
   const app = express();
 
   app.use(cors());

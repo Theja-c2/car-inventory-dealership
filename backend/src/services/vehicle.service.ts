@@ -1,4 +1,4 @@
-import type Database from 'better-sqlite3';
+import type { DatabaseSync } from 'node:sqlite';
 
 export interface Vehicle {
   id: number;
@@ -35,7 +35,7 @@ export interface VehicleSearchParams {
   maxPrice?: number;
 }
 
-export function createVehicle(db: Database.Database, input: NewVehicleInput): Vehicle {
+export function createVehicle(db: DatabaseSync, input: NewVehicleInput): Vehicle {
   const quantity = input.quantity ?? 0;
   const result = db
     .prepare(
@@ -46,15 +46,15 @@ export function createVehicle(db: Database.Database, input: NewVehicleInput): Ve
   return getVehicleById(db, Number(result.lastInsertRowid)) as Vehicle;
 }
 
-export function listVehicles(db: Database.Database): Vehicle[] {
-  return db.prepare('SELECT * FROM vehicles ORDER BY id').all() as Vehicle[];
+export function listVehicles(db: DatabaseSync): Vehicle[] {
+  return db.prepare('SELECT * FROM vehicles ORDER BY id').all() as unknown as Vehicle[];
 }
 
-export function getVehicleById(db: Database.Database, id: number): Vehicle | undefined {
+export function getVehicleById(db: DatabaseSync, id: number): Vehicle | undefined {
   return db.prepare('SELECT * FROM vehicles WHERE id = ?').get(id) as Vehicle | undefined;
 }
 
-export function searchVehicles(db: Database.Database, params: VehicleSearchParams): Vehicle[] {
+export function searchVehicles(db: DatabaseSync, params: VehicleSearchParams): Vehicle[] {
   const clauses: string[] = [];
   const values: (string | number)[] = [];
 
@@ -80,10 +80,10 @@ export function searchVehicles(db: Database.Database, params: VehicleSearchParam
   }
 
   const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
-  return db.prepare(`SELECT * FROM vehicles ${where} ORDER BY id`).all(...values) as Vehicle[];
+  return db.prepare(`SELECT * FROM vehicles ${where} ORDER BY id`).all(...values) as unknown as Vehicle[];
 }
 
-function assertExists(db: Database.Database, id: number): Vehicle {
+function assertExists(db: DatabaseSync, id: number): Vehicle {
   const vehicle = getVehicleById(db, id);
   if (!vehicle) {
     throw new Error(`Vehicle ${id} not found`);
@@ -91,7 +91,7 @@ function assertExists(db: Database.Database, id: number): Vehicle {
   return vehicle;
 }
 
-export function updateVehicle(db: Database.Database, id: number, updates: VehicleUpdateInput): Vehicle {
+export function updateVehicle(db: DatabaseSync, id: number, updates: VehicleUpdateInput): Vehicle {
   const existing = assertExists(db, id);
   const merged = { ...existing, ...updates };
 
@@ -104,12 +104,12 @@ export function updateVehicle(db: Database.Database, id: number, updates: Vehicl
   return getVehicleById(db, id) as Vehicle;
 }
 
-export function deleteVehicle(db: Database.Database, id: number): void {
+export function deleteVehicle(db: DatabaseSync, id: number): void {
   assertExists(db, id);
   db.prepare('DELETE FROM vehicles WHERE id = ?').run(id);
 }
 
-export function purchaseVehicle(db: Database.Database, id: number, amount = 1): Vehicle {
+export function purchaseVehicle(db: DatabaseSync, id: number, amount = 1): Vehicle {
   const vehicle = assertExists(db, id);
   if (vehicle.quantity < amount) {
     throw new Error('Vehicle is out of stock or has insufficient quantity');
@@ -117,7 +117,7 @@ export function purchaseVehicle(db: Database.Database, id: number, amount = 1): 
   return updateVehicle(db, id, { quantity: vehicle.quantity - amount });
 }
 
-export function restockVehicle(db: Database.Database, id: number, amount: number): Vehicle {
+export function restockVehicle(db: DatabaseSync, id: number, amount: number): Vehicle {
   const vehicle = assertExists(db, id);
   if (amount <= 0) {
     throw new Error('Restock amount must be positive');

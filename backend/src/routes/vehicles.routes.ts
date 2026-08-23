@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import type Database from 'better-sqlite3';
+import type { DatabaseSync } from 'node:sqlite';
 import { authenticate, requireAdmin } from '../middleware/auth';
 import {
   createVehicle,
@@ -12,7 +12,7 @@ import {
   restockVehicle
 } from '../services/vehicle.service';
 
-export function createVehiclesRouter(db: Database.Database): Router {
+export function createVehiclesRouter(db: DatabaseSync): Router {
   const router = Router();
 
   router.use(authenticate);

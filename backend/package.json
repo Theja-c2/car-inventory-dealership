@@ -6,20 +6,22 @@
   "directories": {
     "test": "tests"
   },
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --runInBand",
-    "test:watch": "cross-env NODE_ENV=test jest --watch --runInBand",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "test": "cross-env NODE_ENV=test NODE_NO_WARNINGS=1 jest --runInBand",
+    "test:watch": "cross-env NODE_ENV=test NODE_NO_WARNINGS=1 jest --watch --runInBand",
+    "dev": "cross-env NODE_NO_WARNINGS=1 ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js",
-    "seed": "ts-node src/seed.ts"
+    "start": "cross-env NODE_NO_WARNINGS=1 node dist/server.js",
+    "seed": "cross-env NODE_NO_WARNINGS=1 ts-node src/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^13.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
@@ -28,7 +30,6 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "@types/better-sqlite3": "^9.6.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",

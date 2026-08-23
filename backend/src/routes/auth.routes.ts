@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import type Database from 'better-sqlite3';
+import type { DatabaseSync } from 'node:sqlite';
 import { register, login } from '../services/auth.service';
 
-export function createAuthRouter(db: Database.Database): Router {
+export function createAuthRouter(db: DatabaseSync): Router {
   const router = Router();
 
   router.post('/register', (req: Request, res: Response) => {

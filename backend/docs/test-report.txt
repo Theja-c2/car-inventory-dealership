@@ -1,57 +1,57 @@
-Generated: 2026-08-23 13:01 UTC
-PASS tests/vehicles.routes.test.ts (6.467 s)
+Generated: 2026-08-23 14:46 UTC
+PASS tests/vehicles.routes.test.ts (6.094 s)
   Vehicle routes
-    ✓ rejects unauthenticated requests (464 ms)
-    ✓ allows an authenticated user to create and list vehicles (383 ms)
-    ✓ searches vehicles by query params (376 ms)
-    ✓ allows updating a vehicle (405 ms)
-    ✓ rejects vehicle deletion by non-admin users (368 ms)
-    ✓ allows vehicle deletion by admin users (360 ms)
-    ✓ purchases a vehicle and decrements quantity (359 ms)
-    ✓ rejects restock by non-admin users (364 ms)
-    ✓ allows restock by admin users (362 ms)
+    ✓ rejects unauthenticated requests (438 ms)
+    ✓ allows an authenticated user to create and list vehicles (378 ms)
+    ✓ searches vehicles by query params (386 ms)
+    ✓ allows updating a vehicle (369 ms)
+    ✓ rejects vehicle deletion by non-admin users (385 ms)
+    ✓ allows vehicle deletion by admin users (361 ms)
+    ✓ purchases a vehicle and decrements quantity (361 ms)
+    ✓ rejects restock by non-admin users (366 ms)
+    ✓ allows restock by admin users (358 ms)
 
 PASS tests/auth.service.test.ts
   Auth service
-    ✓ registers a new user with a hashed password (126 ms)
-    ✓ rejects duplicate registration (98 ms)
+    ✓ registers a new user with a hashed password (106 ms)
+    ✓ rejects duplicate registration (96 ms)
     ✓ rejects registration with a weak password (2 ms)
-    ✓ logs in with correct credentials and returns a token (179 ms)
-    ✓ rejects login with wrong password (177 ms)
+    ✓ logs in with correct credentials and returns a token (180 ms)
+    ✓ rejects login with wrong password (176 ms)
     ✓ rejects login for unknown email (1 ms)
 
 PASS tests/auth.routes.test.ts
   Auth routes
-    ✓ POST /api/auth/register creates a user and returns 201 (137 ms)
-    ✓ POST /api/auth/register returns 400 on missing fields (4 ms)
-    ✓ POST /api/auth/register returns 409 on duplicate email (125 ms)
+    ✓ POST /api/auth/register creates a user and returns 201 (134 ms)
+    ✓ POST /api/auth/register returns 400 on missing fields (5 ms)
+    ✓ POST /api/auth/register returns 409 on duplicate email (92 ms)
     ✓ POST /api/auth/login returns a token for valid credentials (179 ms)
-    ✓ POST /api/auth/login returns 401 for invalid credentials (5 ms)
+    ✓ POST /api/auth/login returns 401 for invalid credentials (4 ms)
 
 PASS tests/vehicle.service.test.ts
   Vehicle service
-    ✓ creates a vehicle with a unique id (5 ms)
-    ✓ lists all vehicles (3 ms)
+    ✓ creates a vehicle with a unique id (2 ms)
+    ✓ lists all vehicles (2 ms)
     ✓ gets a vehicle by id (1 ms)
     ✓ searches vehicles by make (1 ms)
-    ✓ searches vehicles by category and price range (1 ms)
+    ✓ searches vehicles by category and price range (15 ms)
     ✓ updates a vehicle (1 ms)
-    ✓ throws when updating a non-existent vehicle (6 ms)
+    ✓ throws when updating a non-existent vehicle (8 ms)
     ✓ deletes a vehicle (1 ms)
     ✓ decreases quantity on purchase (1 ms)
-    ✓ rejects purchase when out of stock (2 ms)
+    ✓ rejects purchase when out of stock (1 ms)
     ✓ increases quantity on restock (1 ms)
-
-PASS tests/db.test.ts
-  Database
-    ✓ creates users and vehicles tables (6 ms)
-    ✓ enforces unique email on users (1 ms)
-    ✓ defaults vehicle quantity to 0 when not provided (1 ms)
 
 PASS tests/jwt.test.ts
   JWT utils
     ✓ signs a token that can be verified back to the same payload (1 ms)
     ✓ throws when verifying an invalid token (2 ms)
+
+PASS tests/db.test.ts
+  Database
+    ✓ creates users and vehicles tables (1 ms)
+    ✓ enforces unique email on users (3 ms)
+    ✓ defaults vehicle quantity to 0 when not provided (1 ms)
 
 ---------------------|---------|----------|---------|---------|----------------------------
 File                 | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s          
@@ -60,7 +60,7 @@ All files            |   85.77 |    68.54 |   86.84 |   85.77 |
  src                 |   84.21 |    85.71 |      50 |   84.21 |                            
   app.ts             |   84.21 |    85.71 |      50 |   84.21 | 21,28-29                   
  src/db              |   61.53 |    41.17 |      50 |   61.53 |                            
-  database.ts        |   61.53 |    41.17 |      50 |   61.53 | 19-21,55-65                
+  database.ts        |   61.53 |    41.17 |      50 |   61.53 | 23-25,59-69                
  src/middleware      |   94.11 |      100 |     100 |   94.11 |                            
   auth.ts            |   94.11 |      100 |     100 |   94.11 | 19                         
  src/routes          |   81.81 |    59.09 |   91.66 |   81.81 |                            
@@ -82,5 +82,5 @@ Lines        : 85.77% ( 193/225 )
 Test Suites: 6 passed, 6 total
 Tests:       36 passed, 36 total
 Snapshots:   0 total
-Time:        8.247 s
+Time:        7.767 s, estimated 8 s
 Ran all test suites.

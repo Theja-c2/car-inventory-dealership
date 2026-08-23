@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import type Database from 'better-sqlite3';
+import type { DatabaseSync } from 'node:sqlite';
 import { signToken } from '../utils/jwt';
 
 export interface PublicUser {
@@ -16,7 +16,7 @@ const MIN_PASSWORD_LENGTH = 8;
  * callers (route handlers) can map it to the right HTTP status.
  */
 export function register(
-  db: Database.Database,
+  db: DatabaseSync,
   email: string,
   password: string,
   role: 'user' | 'admin' = 'user'
@@ -44,7 +44,7 @@ export function register(
  * wrong-password cases to avoid leaking which emails are registered.
  */
 export function login(
-  db: Database.Database,
+  db: DatabaseSync,
   email: string,
   password: string
 ): { token: string; user: PublicUser } {
