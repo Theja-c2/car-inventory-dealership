@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-charcoal: #1c1c1e;
+  --color-charcoal-light: #2a2a2d;
+  --color-paper: #faf8f3;
+  --color-paper-dim: #f0ede4;
+  --color-amber: #f0a202;
+  --color-amber-dark: #c47f01;
+  --color-racing-green: #1b4332;
+  --color-racing-green-light: #2d6a4f;
+  --color-signal-red: #b3261e;
+  --color-slate: #6b7280;
+}
+
+body {
+  background-color: var(--color-paper);
+  font-family: var(--font-body);
+  color: var(--color-charcoal);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Subtle diagonal hazard-stripe texture, used sparingly as an accent. */
+.stripe-accent {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--color-amber) 0px,
+    var(--color-amber) 10px,
+    var(--color-charcoal) 10px,
+    var(--color-charcoal) 20px
+  );
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+}
